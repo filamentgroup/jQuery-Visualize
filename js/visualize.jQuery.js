@@ -163,7 +163,7 @@ $.fn.visualize = function(options, container){
 					var numLabels = Math.round(o.height / o.yLabelInterval);
 					var loopInterval = Math.ceil(totalYRange / numLabels) || 1;
 					while( yLabels[yLabels.length-1] < topValue - loopInterval){
-						yLabels.push(yLabels[yLabels.length-1] + loopInterval); 
+						yLabels.push((yLabels[yLabels.length - 1] + loopInterval).toFixed(2));
 					}
 					yLabels.push(topValue); 
 					return yLabels;
