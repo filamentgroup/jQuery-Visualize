@@ -17,8 +17,8 @@ $.fn.visualize = function(options, container){
 			appendTitle: true, //table caption text is added to chart
 			title: null, //grabs from table caption if null
 			appendKey: true, //color key is added to chart
-			rowFilter: ' ',
-			colFilter: ' ',
+			rowFilter: '*',
+			colFilter: '*',
 			colors: ['#be1e2d','#666699','#92d5ea','#ee8310','#8d10ee','#5a3b16','#26a4ed','#f45a90','#e9e744'],
 			textColors: [], //corresponds with colors array. null/undefined items will fall back to CSS
 			parseDirection: 'x', //which direction to parse the table data
