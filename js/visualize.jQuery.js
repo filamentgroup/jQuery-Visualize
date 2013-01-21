@@ -28,7 +28,9 @@ $.fn.visualize = function(options, container){
 			lineWeight: 4, //for line and area - stroke weight
 			barGroupMargin: 10,
 			barMargin: 1, //space around bars in bar chart (added to both sides of bar)
-			yLabelInterval: 30 //distance between y labels
+			yLabelInterval: 30, //distance between y labels
+			topValue: null, // maximum y value
+			bottomValue: null, // minimum y value
 		},options);
 		
 		//reset width, height to numbers
@@ -86,19 +88,30 @@ $.fn.visualize = function(options, container){
 					return dataSum
 				},	
 				topValue: function(){
-						var topValue = 0;
-						var allData = this.allData().join(',').split(',');
-						$(allData).each(function(){
-							if(parseFloat(this,10)>topValue) topValue = parseFloat(this);
-						});
+						var topValue;
+						if(o.topValue !== null)
+						{
+							topValue = parseFloat(o.topValue);
+						} else {
+							topValue = 0;
+							var allData = this.allData().join(',').split(',');
+							$(allData).each(function(){
+								if(parseFloat(this,10)>topValue) topValue = parseFloat(this);
+							});
+						}
 						return topValue;
 				},
 				bottomValue: function(){
-						var bottomValue = 0;
-						var allData = this.allData().join(',').split(',');
-						$(allData).each(function(){
-							if(this<bottomValue) bottomValue = parseFloat(this);
-						});
+						var bottomValue;
+						if(o.bottomValue !== null) {
+							bottomValue = parseFloat(o.bottomValue);
+						} else {
+							bottomValue = 0;
+							var allData = this.allData().join(',').split(',');
+							$(allData).each(function(){
+								if(this<bottomValue) bottomValue = parseFloat(this);
+							});
+						}
 						return bottomValue;
 				},
 				memberTotals: function(){
