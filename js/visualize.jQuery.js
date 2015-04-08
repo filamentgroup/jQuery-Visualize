@@ -193,16 +193,18 @@ $.fn.visualize = function(options, container){
 				//draw the pie pieces
 				$.each(memberTotals, function(i){
 					var fraction = (this <= 0 || isNaN(this))? 0 : this / dataSum;
-					ctx.beginPath();
-					ctx.moveTo(centerx, centery);
-					ctx.arc(centerx, centery, radius, 
-						counter * Math.PI * 2 - Math.PI * 0.5,
-						(counter + fraction) * Math.PI * 2 - Math.PI * 0.5,
-		                false);
-			        ctx.lineTo(centerx, centery);
-			        ctx.closePath();
-			        ctx.fillStyle = dataGroups[i].color;
-			        ctx.fill();
+					if(fraction > 0){
+						ctx.beginPath();
+						ctx.moveTo(centerx, centery);
+						ctx.arc(centerx, centery, radius, 
+							counter * Math.PI * 2 - Math.PI * 0.5,
+							(counter + fraction) * Math.PI * 2 - Math.PI * 0.5,
+							false);
+						ctx.lineTo(centerx, centery);
+						ctx.closePath();
+						ctx.fillStyle = dataGroups[i].color;
+						ctx.fill();
+					}
 			        // draw labels
 			       	var sliceMiddle = (counter + fraction/2);
 			       	var distance = o.pieLabelPos == 'inside' ? radius/1.5 : radius +  radius / 5;
@@ -369,7 +371,10 @@ $.fn.visualize = function(options, container){
 						xVal += o.barGroupMargin*2;
 						
 						ctx.moveTo(xVal, 0);
-						ctx.lineTo(xVal, Math.round(-points[i]*yScale));
+						var yVal = Math.round(-points[i]*yScale);
+						if(yVal < 0){
+							ctx.lineTo(xVal, yVal);
+						}
 						integer+=xInterval;
 					}
 					ctx.strokeStyle = dataGroups[h].color;
